@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
-    public function login(Request $request)
+public function login(Request $request)
     {
         $credentials = $request->validate([
             'username' => 'required|string',
@@ -21,8 +19,16 @@ class LoginController extends Controller
         }
 
         $user = Auth::user();
-        $token = $user->createToken('AppName')->accessToken;
+        $token = $user->createToken('Announcer_API')->accessToken;
 
+        // Retorna solo el token en lugar de todo el objeto de token
         return response()->json(['token' => $token], 200);
+    }
+
+    public function logout()
+    {
+        Auth::user()->tokens()->delete();
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 }
