@@ -19,12 +19,13 @@ class ProjectController extends Controller
           return response()->json(['error' => 'No se permite crear proyectos a través de esta ruta.'], 405);
     }
 
-      public function store(Request $request)
-    {
+  public function store(Request $request)
+{
+    try {
         $request->validate([
             'link' => 'required|url',
             'category' => 'required|array|max:2',
-            'description' => 'required|string|max:250',
+            'description' => 'required|string|max:380',
         ]);
 
         $project = new Project([
@@ -36,7 +37,11 @@ class ProjectController extends Controller
         $project->save();
 
         return response()->json(['message' => 'Proyecto creado exitosamente'], 201);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        // Captura la excepción de validación y retorna un mensaje personalizado
+        return response()->json(['error' => 'Complete los campos obligatorios. Ej. URL: http://...'], 422);
     }
+}
 
      public function show($id)
     {
@@ -61,7 +66,7 @@ class ProjectController extends Controller
         $request->validate([
             'link' => 'required|url',
             'category' => 'required|array|max:2',
-            'description' => 'required|string|max:250',
+            'description' => 'required|string|max:380',
         ]);
 
         $project = Project::find($id);

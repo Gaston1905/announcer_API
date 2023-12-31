@@ -22,7 +22,7 @@ public function login(Request $request)
     $token = $user->createToken('Announcer_API')->accessToken;
 
     // Retorna solo el token en lugar de todo el objeto de token
-    return response()->json($token, 200);
+    return response()->json([$token, $user], 200);
 }
 
 
