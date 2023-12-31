@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Passport\Passport; // Asegúrate de agregar esta línea
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -30,11 +30,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Passport::routes(function ($router) {
-            $router->forAccessTokens();
-        });
+        Passport::routes();
 
         // Reemplaza el controlador predeterminado con tu controlador personalizado
-        app('router')->post('/oauth/token', '\App\Http\Controllers\CustomAccessTokenController@issueToken');
-    }
+        // app('router')->post('/oauth/token', '\App\Http\Controllers\CustomAccessTokenController@issueToken');
+}
+
 }

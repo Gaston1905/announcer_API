@@ -13,16 +13,19 @@ class CustomAccessTokenController extends BaseAccessTokenController
      * @param  \Psr\Http\Message\ServerRequestInterface  $request
      * @return array
      */
-    public function issueToken(ServerRequestInterface $request)
-    {
-        $response = parent::issueToken($request);
+public function issueToken(ServerRequestInterface $request)
+{
+    $response = parent::issueToken($request);
 
-        // Personaliza la respuesta aquí según tus necesidades
-        $content = json_decode($response->getContent(), true);
-        $token = $content['access_token'];
+    // Personaliza la respuesta aquí según tus necesidades
+    $content = json_decode($response->getContent(), true);
+    $token = $content['access_token'];
 
-        return [
-            'token' => $token,
-        ];
-    }
+    // Agrega un log para verificar el token
+    \Log::info('Token issued: ' . $token);
+
+    return [
+        'token' => $token,
+    ];
+}
 }

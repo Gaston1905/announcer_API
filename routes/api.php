@@ -16,11 +16,16 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-
+Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('user', 'AuthController@user');
+    });
 
 // Ruta de login
-// Route::post('/login', 'AuthController@login');
 Route::post('/login', [AuthController::class, 'login']);
+
 
 // Rutas para mostrar la lista de proyectos y crear un nuevo proyecto
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');

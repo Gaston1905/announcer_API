@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'api' => [
+        'driver' => 'passport',  // O el driver que estés utilizando para tu API
+        'provider' => 'users'
+        ],
+
     ],
 
     /*
@@ -108,4 +114,6 @@ return [
 
     'password_timeout' => 10800,
 
+
+   
 ];
